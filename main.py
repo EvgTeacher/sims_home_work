@@ -89,14 +89,20 @@ class Human:
         print(f"{home_indexess:^50}", '\n')
         print(f'Food - {self.home.food}')
         print(f'Mess - {self.home.mess}')
-        # Home Work - Написать код, который выводит всю
-        # инфу о машине, т.е. бренд, кол бензина и тех ссотояние
         car_indexess = f'{self.car.brand} car indexess'
         print(f"{car_indexess:^50}", '\n')
         print(f"Fuel - {self.car.fuel}")
         print(f"Strength - {self.car.strength}", "\n")
     def is_alive(self):
-        pass
+        if self.gladness < 0:
+            print("Depression....")
+            return False
+        if self.satiety < 0:
+            print("Dead...")
+            return False
+        if self.money < -500:
+            print('Bankrupt...')
+            return False
     def live(self, day):
         if self.is_alive() == False:
             return False
@@ -111,7 +117,6 @@ class Human:
             print(f'My job is {self.job.job}, with salary {self.job.salary}')
         self.days_indexes(day)
 
-        # Самое интересное - устроить веселую жизнь герою (по аналогии со студентом)
         dice = random.randint(1, 4)
         if self.satiety < 10:
             print("I'll go eat")
@@ -123,8 +128,24 @@ class Human:
             else:
                 print("Let's chill")
                 self.chill()
-        # Проверить количество денег
-        # Проверить тех состояние авто
+        elif self.money < 0:
+            print("Time working")
+            self.work()
+        elif self.car.strength < 10:
+            print("I need to repair my car")
+            self.to_repair()
+        elif dice == 1:
+            print("Let's chill!")
+            self.chill()
+        elif dice == 2:
+            print("Time working")
+            self.work()
+        elif dice == 3:
+            print("Cleaning time!")
+            self.clean_home()
+        elif dice == 4:
+            print("Time shopping")
+            self.shopping(manage="delicacies")
 
 
 class Auto:
@@ -150,7 +171,7 @@ class House:
 class Job:
     def __init__(self, job_list):
         self.job = random.choice(list(job_list))
-        self.salery = job_list[self.job]['salary']
+        self.salary = job_list[self.job]['salary']
         self.gladness_less = job_list[self.job]['gladness_less']
 
 
@@ -167,3 +188,11 @@ brands_of_car = {
     "Lada":{"fuel":50, "strength":40, "consumption": 10},
     "Volvo":{"fuel":70, "strength":150, "consumption": 8},
     "Ferrari":{"fuel":80, "strength":120, "consumption": 14}}
+
+
+nick = Human(name="Nick")
+for i in range(1, 365):
+    if nick.live(i) == False:
+        break
+
+
